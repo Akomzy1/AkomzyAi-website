@@ -1,0 +1,590 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════
+   1. TAILWIND v4 THEME
+      Registers brand tokens as first-class Tailwind utilities:
+        bg-brand-teal   text-brand-mint   border-brand-cream …
+      @theme inline  also emits matching CSS custom properties so
+      var(--color-brand-*) resolves correctly in arbitrary values.
+══════════════════════════════════════════════════════════════════ */
+@theme inline {
+
+  /* ── Fonts ──────────────────────────────────────────────────── */
+  /* next/font injects --font-outfit and --font-dm-sans on <html> */
+  --font-sans:    var(--font-dm-sans);    /* body  → DM Sans          */
+  --font-heading: var(--font-outfit);     /* display → Outfit         */
+
+  /* ── Primary: Deep Teal ─────────────────────────────────────── */
+  --color-brand-teal:         #276675;   /* hero / footer bg          */
+  --color-brand-teal-dark:    #1B4F5C;   /* services section bg       */
+  --color-brand-teal-deeper:  #0F3640;   /* deepest bg, CTA, footer   */
+
+  /* ── Accent 1: Mint / Aqua ──────────────────────────────────── */
+  --color-brand-mint:         #96E6E5;   /* icons, buttons, links     */
+  --color-brand-mint-bright:  #A1F3ED;   /* hover states, glows       */
+  --color-brand-mint-muted:   #6BC4C2;   /* secondary accents         */
+
+  /* ── Accent 2: Cream / Ivory ────────────────────────────────── */
+  --color-brand-cream:        #F5FEE3;   /* headings on dark          */
+  --color-brand-ivory:        #FFFFFB;   /* body text on dark         */
+  --color-brand-cream-warm:   #F0E8D0;   /* warm cards / soft bg      */
+
+  /* ── Neutrals ───────────────────────────────────────────────── */
+  --color-white:              #FFFFFF;
+  --color-off-white:          #F7F9F8;   /* light section backgrounds */
+  --color-dark-text:          #1A2E35;   /* headings on light         */
+  --color-muted-text:         #5A7A82;   /* body text on light        */
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   2. GLOBAL CSS CUSTOM PROPERTIES
+      Short --brand-* aliases for use in style="" attributes and
+      arbitrary Tailwind values like bg-[var(--brand-teal)].
+      Also holds composite tokens (shadows, glass, RGB channels).
+══════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Primary ── */
+  --brand-teal:         #276675;
+  --brand-teal-dark:    #1B4F5C;
+  --brand-teal-deeper:  #0F3640;
+
+  /* ── Mint ── */
+  --brand-mint:         #96E6E5;
+  --brand-mint-bright:  #A1F3ED;
+  --brand-mint-muted:   #6BC4C2;
+
+  /* ── Cream ── */
+  --brand-cream:        #F5FEE3;
+  --brand-ivory:        #FFFFFB;
+  --brand-cream-warm:   #F0E8D0;
+
+  /* ── Neutrals ── */
+  --white:              #FFFFFF;
+  --off-white:          #F7F9F8;
+  --dark-text:          #1A2E35;
+  --muted-text:         #5A7A82;
+
+  /* ── RGB channel (for rgba() without color-mix) ── */
+  --mint-rgb:           150, 230, 229;   /* #96E6E5 */
+  --teal-rgb:           39, 102, 117;    /* #276675 */
+  --teal-deep-rgb:      15, 54, 64;      /* #0F3640 */
+
+  /* ── Glassmorphism tokens ── */
+  --glass-bg:           rgba(255, 255, 255, 0.05);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.09);
+  --glass-border:       rgba(150, 230, 229, 0.15);
+  --glass-border-hover: rgba(150, 230, 229, 0.38);
+  --glass-blur:         12px;
+
+  /* ── Shadows ── */
+  --shadow-card-light:  0 2px 20px rgba(39, 102, 117, 0.08);
+  --shadow-card-hover:  0 6px 32px rgba(39, 102, 117, 0.14);
+  --shadow-mint-glow:   0 0 22px rgba(150, 230, 229, 0.38);
+  --shadow-mint-subtle: 0 0 12px rgba(150, 230, 229, 0.22);
+
+  /* ── Radii ── */
+  --radius-card:        1rem;
+  --radius-btn:         0.75rem;
+
+  /* ── Transitions ── */
+  --ease-brand:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   3. BASE LAYER
+      Global element styles. Fonts, smoothing, focus ring, selection.
+      Zero non-brand colors allowed.
+══════════════════════════════════════════════════════════════════ */
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchors below the sticky navbar.
+       Navbar: h-16 (4rem/64px) mobile · h-20 (5rem/80px) desktop.
+       +8px breathing room so section headings aren't flush with nav edge. */
+    scroll-padding-top: 4.5rem; /* 72px — mobile */
+  }
+
+  @media (min-width: 1024px) {
+    html { scroll-padding-top: 5.5rem; } /* 88px — desktop */
+  }
+
+  body {
+    font-family: var(--font-sans, 'DM Sans', sans-serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: var(--white);
+    color: var(--dark-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Suppress the iOS blue flash on tap — removes perceived lag */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Heading font — Outfit 600–800 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--dark-text);
+  }
+
+  /* On dark sections headings inherit color from parent */
+  .section-dark h1,
+  .section-dark h2,
+  .section-dark h3,
+  .section-dark h4 {
+    color: var(--brand-cream);
+  }
+
+  /* Brand-safe focus ring — visible on both light and dark backgrounds.
+     Two-layer technique:
+       · 3px solid mint outline  → clearly visible on dark teal sections
+       · semi-dark box-shadow    → creates backdrop ensuring visibility
+         on light (off-white / white) sections where mint alone is ~2:1
+     Both layers together exceed WCAG 2.2 §2.4.11 (3:1 focus contrast). */
+  :focus-visible {
+    outline: 3px solid var(--brand-mint);
+    outline-offset: 2px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 5px rgba(var(--teal-deep-rgb), 0.30);
+  }
+
+  /* Brand text selection */
+  ::selection {
+    background-color: rgba(150, 230, 229, 0.28);
+    color: var(--brand-teal-deeper);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video, svg {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   4. KEYFRAME ANIMATIONS
+══════════════════════════════════════════════════════════════════ */
+
+/* Animated noise texture movement */
+@keyframes grain {
+  0%,  100% { transform: translate(0,     0);    }
+  10%        { transform: translate(-5%,  -10%); }
+  20%        { transform: translate(-15%,  5%);  }
+  30%        { transform: translate( 7%,  -25%); }
+  40%        { transform: translate(-5%,   25%); }
+  50%        { transform: translate(-15%,  10%); }
+  60%        { transform: translate( 15%,  0%);  }
+  70%        { transform: translate( 0%,   15%); }
+  80%        { transform: translate( 3%,   35%); }
+  90%        { transform: translate(-10%,  10%); }
+}
+
+/* Seamless horizontal marquee (duplicate items for loop) */
+@keyframes marquee {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(-50%); }
+}
+
+/* CTA button mint pulse */
+@keyframes pulseGlow {
+  0%,  100% { box-shadow: 0 0  0   0   rgba(var(--mint-rgb), 0.45); }
+  50%        { box-shadow: 0 0 28px 8px rgba(var(--mint-rgb), 0.18); }
+}
+
+/* Hero background orb float */
+@keyframes float {
+  0%,  100% { transform: translateY(0)    scale(1);    }
+  50%        { transform: translateY(-20px) scale(1.04); }
+}
+
+/* Scroll-reveal fallback (no-JS / reduced-motion) */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Radial glow pulse (decorative orbs) */
+@keyframes glowPulse {
+  0%,  100% { opacity: 0.12; }
+  50%        { opacity: 0.22; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   5. COMPONENT CLASSES
+      Reusable, composable; meant to be applied on section wrappers
+      or card containers directly in JSX.
+══════════════════════════════════════════════════════════════════ */
+
+/* ── 5a. Grain / noise overlay ──────────────────────────────────
+   Apply to any teal section: <section className="grain ...">
+   The noise layer sits between the bg-color and the content
+   (content should have relative z-10 to ensure stacking).
+   ─────────────────────────────────────────────────────────────── */
+.grain {
+  position: relative;
+  overflow: hidden;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  /* Inline SVG feTurbulence noise — no external request */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.038;
+  animation: grain 8s steps(10) infinite;
+  pointer-events: none;
+  /* z-index 0 keeps grain visible above bg-color;
+     content with z-10 stacks above it correctly. */
+  z-index: 0;
+}
+
+/* ── 5b. Glassmorphism card (dark / teal sections) ──────────────
+   Apply inside teal sections: <div className="glass-card p-8">
+   ─────────────────────────────────────────────────────────────── */
+.glass-card {
+  background:           var(--glass-bg);
+  backdrop-filter:      blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border:               1px solid var(--glass-border);
+  border-radius:        var(--radius-card);
+  transition:
+    background     0.25s var(--ease-brand),
+    border-color   0.25s var(--ease-brand),
+    transform      0.25s var(--ease-brand),
+    box-shadow     0.25s var(--ease-brand);
+}
+.glass-card:hover {
+  background:    var(--glass-bg-hover);
+  border-color:  var(--glass-border-hover);
+  transform:     translateY(-5px);
+  box-shadow:    0 16px 40px rgba(0, 0, 0, 0.2),
+                 0 0 0 1px rgba(var(--mint-rgb), 0.12);
+}
+
+/* ── 5c. Light card (off-white / white sections) ────────────────
+   Apply inside light sections: <div className="light-card p-8">
+   ─────────────────────────────────────────────────────────────── */
+.light-card {
+  background:    var(--white);
+  border:        1px solid rgba(var(--teal-rgb), 0.1);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-card-light);
+  transition:
+    box-shadow 0.25s var(--ease-brand),
+    transform  0.25s var(--ease-brand),
+    border-color 0.25s var(--ease-brand);
+}
+.light-card:hover {
+  box-shadow:   var(--shadow-card-hover);
+  border-color: rgba(var(--teal-rgb), 0.18);
+  transform:    translateY(-3px);
+}
+
+/* ── 5d. Mint glow hover utility ────────────────────────────────
+   Add to buttons, icon wrappers, links: <a className="glow-hover">
+   ─────────────────────────────────────────────────────────────── */
+.glow-hover {
+  transition:
+    box-shadow 0.2s var(--ease-brand),
+    transform  0.2s var(--ease-brand);
+}
+.glow-hover:hover,
+.glow-hover:focus-visible {
+  box-shadow: var(--shadow-mint-glow);
+  transform: scale(1.04);
+}
+
+/* ── 5e. Primary button ─────────────────────────────────────────
+   Mint bg + teal-deeper text; hover → mint-bright + glow
+   ─────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             0.5rem;
+  padding:         0.875rem 2.25rem;
+  border-radius:   var(--radius-btn);
+  font-family:     var(--font-heading, 'Outfit', sans-serif);
+  font-weight:     700;
+  font-size:       1rem;
+  line-height:     1;
+  color:           var(--brand-teal-deeper);
+  background:      var(--brand-mint);
+  border:          2px solid transparent;
+  cursor:          pointer;
+  text-decoration: none;
+  transition:
+    background 0.2s var(--ease-brand),
+    transform  0.2s var(--ease-brand),
+    box-shadow 0.2s var(--ease-brand);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background:  var(--brand-mint-bright);
+  transform:   scale(1.04);
+  box-shadow:  0 0 24px rgba(var(--mint-rgb), 0.42);
+}
+
+/* ── 5f. Ghost / secondary button ──────────────────────────────
+   Transparent + mint border; hover → fills mint
+   ─────────────────────────────────────────────────────────────── */
+.btn-ghost {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             0.5rem;
+  padding:         0.875rem 2.25rem;
+  border-radius:   var(--radius-btn);
+  font-family:     var(--font-heading, 'Outfit', sans-serif);
+  font-weight:     700;
+  font-size:       1rem;
+  line-height:     1;
+  color:           var(--brand-mint);
+  background:      transparent;
+  border:          2px solid var(--brand-mint);
+  cursor:          pointer;
+  text-decoration: none;
+  transition:
+    background  0.2s var(--ease-brand),
+    color       0.2s var(--ease-brand),
+    transform   0.2s var(--ease-brand),
+    box-shadow  0.2s var(--ease-brand);
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: var(--brand-mint);
+  color:      var(--brand-teal-deeper);
+  transform:  scale(1.04);
+  box-shadow: 0 0 18px rgba(var(--mint-rgb), 0.32);
+}
+
+/* ── 5g. Dot-grid texture (light sections, optional) ────────────
+   Usage: <section className="dot-grid ...">
+   ─────────────────────────────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(var(--teal-rgb), 0.11) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* ── 5h. Decorative mint orb (hero / CTA background element) ────
+   Usage: <div className="mint-orb w-96 h-96" style="top:20%; left:15%">
+   ─────────────────────────────────────────────────────────────── */
+.mint-orb {
+  position:      absolute;
+  border-radius: 50%;
+  background:    radial-gradient(
+    circle,
+    rgba(var(--mint-rgb), 0.22) 0%,
+    transparent  70%
+  );
+  pointer-events: none;
+  filter:         blur(40px);
+  animation:      float 8s ease-in-out infinite,
+                  glowPulse 6s ease-in-out infinite;
+}
+
+/* ── 5i. Section-dark helper ────────────────────────────────────
+   Convenience class: applies correct text colors for dark sections
+   without needing per-element style attributes.
+   ─────────────────────────────────────────────────────────────── */
+.section-dark {
+  color: var(--brand-ivory);
+}
+.section-dark p {
+  color: var(--brand-ivory);
+  opacity: 0.88;
+}
+.section-dark .label {
+  color: var(--brand-mint);
+}
+
+/* ── 5j. Teal gradient backgrounds ──────────────────────────────
+   .bg-teal-gradient → horizontal-ish for hero/CTA blocks
+   .bg-teal-gradient-v → vertical for tall sections
+   ─────────────────────────────────────────────────────────────── */
+.bg-teal-gradient {
+  background: linear-gradient(
+    145deg,
+    var(--brand-teal) 0%,
+    var(--brand-teal-deeper) 100%
+  );
+}
+.bg-teal-gradient-v {
+  background: linear-gradient(
+    to bottom,
+    var(--brand-teal) 0%,
+    var(--brand-teal-deeper) 100%
+  );
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   6. TAILWIND v4 CUSTOM UTILITIES
+      Defined with @utility so they participate in the variant
+      pipeline:  md:section-pad   hover:pulse-glow   etc.
+══════════════════════════════════════════════════════════════════ */
+
+/* Responsive section padding */
+@utility section-pad {
+  padding-top:    5rem;
+  padding-bottom: 5rem;
+
+  @media (min-width: 768px) {
+    padding-top:    7rem;
+    padding-bottom: 7rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-top:    8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Tighter section padding (sub-sections, tighter rhythm) */
+@utility section-pad-sm {
+  padding-top:    3.5rem;
+  padding-bottom: 3.5rem;
+
+  @media (min-width: 768px) {
+    padding-top:    5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Marquee animation */
+@utility animate-marquee {
+  animation:    marquee 28s linear infinite;
+  will-change:  transform;
+}
+
+/* CTA pulse-glow animation */
+@utility pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Force Outfit on any element */
+@utility font-heading {
+  font-family: var(--font-heading, 'Outfit', sans-serif);
+}
+
+/* Mint text glow — accent numbers / hero tagline */
+@utility text-mint-glow {
+  text-shadow: 0 0 28px rgba(var(--mint-rgb), 0.5);
+}
+
+/* Teal text glow — used sparingly on headings in light sections */
+@utility text-teal-glow {
+  text-shadow: 0 0 24px rgba(var(--teal-rgb), 0.3);
+}
+
+/* Fade-up reveal — no-JS fallback, or supplement to Framer Motion */
+@utility animate-fade-up {
+  animation: fadeUp 0.7s var(--ease-brand) both;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   7. MOBILE PERFORMANCE
+      Disable GPU-intensive effects on mobile hardware.
+      Blur filters, backdrop-blur and continuous animations are the
+      most common cause of slow scroll/paint on mobile GPUs.
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Prevent rubber-band / scroll-chaining from interfering with scroll */
+  body { overscroll-behavior-y: none; }
+
+  /* Grain overlay is a 400%×400% element running an infinite
+     transform — skip the animation entirely on mobile. */
+  .grain::after { animation: none; }
+
+  /* Hero background orbs: 4 blurred, animated compositing layers.
+     The solid brand-teal-deeper bg is sufficient on small screens. */
+  .hero-orbs { display: none; }
+
+  /* Decorative blur orbs in other sections (Services, Results) */
+  .section-orb { display: none; }
+
+  /* Replace the infinite box-shadow pulse with a static glow
+     so CTA buttons don't trigger repaints every 3 s. */
+  .pulse-glow {
+    animation:  none;
+    box-shadow: 0 0 18px rgba(150, 230, 229, 0.30);
+  }
+
+  /* Stop the marquee animation and collapse into a wrapping flex grid.
+     Hides the aria-hidden duplicate set so chips don't appear twice. */
+  .animate-marquee {
+    animation:       none;
+    flex-wrap:       wrap;
+    justify-content: center;
+    padding:         0 1rem;
+    gap:             0.5rem !important;
+  }
+  .animate-marquee ul[aria-hidden="true"] { display: none; }
+  .animate-marquee ul {
+    flex-wrap:       wrap;
+    justify-content: center;
+  }
+}
+
+/* ── Touch-device hover states ───────────────────────────────────
+   On devices where the primary input is touch (no true hover),
+   disable translateY lifts and glow effects. Without this,
+   tapping a card leaves it in its hover/lifted state indefinitely,
+   causing composite-layer churn on every subsequent scroll.       */
+@media (hover: none) {
+  .glass-card:hover {
+    transform:    none;
+    background:   var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow:   none;
+  }
+  .light-card:hover {
+    transform:    none;
+    box-shadow:   var(--shadow-card-light);
+    border-color: rgba(var(--teal-rgb), 0.10);
+  }
+  .glow-hover:hover { transform: none; box-shadow: none; }
+  .btn-primary:hover,
+  .btn-ghost:hover   { transform: none; box-shadow: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   8. REDUCED MOTION
+      Respect users who prefer no animation.
+══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:   0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:  0.01ms !important;
+    scroll-behavior:      auto  !important;
+  }
+}

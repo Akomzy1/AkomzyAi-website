@@ -1,0 +1,10 @@
+Place your official AkomzyAi brand wordmark PNG here as:
+  public/images/logo.png
+
+A vector placeholder (logo.svg) has been generated using the brand colors.
+
+To use the PNG in components, add an <Image> tag:
+  import Image from 'next/image'
+  <Image src="/images/logo.png" alt="AkomzyAi Consulting" width={180} height={44} />
+
+Also add public/images/og-image.png (1200×630) for OpenGraph metadata.
