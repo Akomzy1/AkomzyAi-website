@@ -33,40 +33,169 @@ const TechMarquee     = dynamic(() => import('./components/TechMarquee'))
 const CTASection      = dynamic(() => import('./components/CTASection'))
 const Footer          = dynamic(() => import('./components/Footer'))
 
-/* ── Organization JSON-LD ───────────────────────────────────────────
-   Structured data for Google's Knowledge Panel and rich results.
-   Update `sameAs` with real social profile URLs before launch.
-   Schema: https://schema.org/Organization
+/* ── Structured Data (@graph) ──────────────────────────────────────
+   Comprehensive JSON-LD for SEO, AI SEO, GEO & AEO.
+   Covers: WebSite · Organization · ProfessionalService ·
+           FAQPage · ItemList (services)
+   Update sameAs + logo before launch.
 ─────────────────────────────────────────────────────────────────── */
 const orgJsonLd = {
-  '@context':   'https://schema.org',
-  '@type':      'Organization',
-  name:         'AkomzyAi Consulting',
-  url:          'https://akomzyai.com',
-  logo:         'https://akomzyai.com/images/logo.png', // TODO: upload real logo
-  description:  'AI Automations, Governance & Training for growth-stage businesses.',
-  email:        'hello@akomzyai.com',           // TODO: confirm address
-  contactPoint: {
-    '@type':       'ContactPoint',
-    contactType:   'customer service',
-    email:         'hello@akomzyai.com',
-    availableLanguage: 'English',
-  },
-  sameAs: [
-    // TODO: add real profile URLs once social accounts are live
-    // 'https://twitter.com/akomzyai',
-    // 'https://linkedin.com/company/akomzyai',
-    // 'https://instagram.com/akomzyai',
-  ],
-  offers: {
-    '@type':       'Service',
-    name:          'AI Automation Consulting',
-    description:   'Intelligent workflow automation, CRM, AI agents, governance, and training.',
-    provider: {
-      '@type': 'Organization',
-      name:    'AkomzyAi Consulting',
+  '@context': 'https://schema.org',
+  '@graph': [
+
+    /* ── 1. WebSite ─────────────────────────────────────────────── */
+    {
+      '@type':       'WebSite',
+      '@id':         'https://akomzyai.com/#website',
+      url:           'https://akomzyai.com',
+      name:          'AkomzyAi Consulting',
+      description:   'AI Automations, GEO, AEO, AI SEO, AI Ads & Governance for growth-stage businesses.',
+      inLanguage:    'en-GB',
+      publisher:     { '@id': 'https://akomzyai.com/#organization' },
     },
-  },
+
+    /* ── 2. Organization + ProfessionalService ──────────────────── */
+    {
+      '@type':       ['Organization', 'ProfessionalService'],
+      '@id':         'https://akomzyai.com/#organization',
+      name:          'AkomzyAi Consulting',
+      alternateName: ['AkomzyAi', 'Akomzy AI'],
+      url:           'https://akomzyai.com',
+      logo:          'https://akomzyai.com/images/logo.png',
+      email:         'hello@akomzyai.com',
+      description:   'AkomzyAi Consulting helps growth-stage businesses automate operations with AI, rank in AI-generated search results (AI SEO), get cited by ChatGPT and Gemini (GEO), appear in AI answer boxes (AEO), run ChatGPT Ads, and govern AI responsibly.',
+      areaServed:    'Worldwide',
+      priceRange:    '££',
+      knowsAbout: [
+        'AI Automation',
+        'Generative Engine Optimisation',
+        'Answer Engine Optimisation',
+        'AI SEO',
+        'AI Ads',
+        'ChatGPT Ads',
+        'n8n Automation',
+        'GoHighLevel',
+        'Make Automation',
+        'Zapier Automation',
+        'AI Governance',
+        'Claude AI',
+        'AI Agents',
+        'Workflow Automation',
+        'CRM Automation',
+      ],
+      contactPoint: {
+        '@type':           'ContactPoint',
+        contactType:       'customer service',
+        email:             'hello@akomzyai.com',
+        availableLanguage: 'English',
+      },
+      sameAs: [
+        // 'https://twitter.com/akomzyai',
+        // 'https://linkedin.com/company/akomzyai',
+        // 'https://instagram.com/akomzyai',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name:    'AI Consulting Services',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Intelligent AI Workflow Automation', description: 'Build 24/7 automation systems on n8n, Airtable, Zapier, Make, and GoHighLevel.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom CRM & Revenue Automation', description: 'Lead capture, nurturing, and pipeline automation that converts prospects into predictable revenue.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI SEO', description: 'Optimise content to rank in AI-generated search results and next-generation search engines.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'GEO — Generative Engine Optimisation', description: 'Position your business as the trusted source cited by ChatGPT, Gemini, and Perplexity.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AEO — Answer Engine Optimisation', description: 'Structure content so voice assistants and AI answer boxes surface your brand as the definitive response.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Ads — ChatGPT Ads', description: 'Targeted AI-native ad placements inside ChatGPT to reach high-intent buyers.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Agents & Claude Code Solutions', description: 'Conversational AI agents and decision-making workflows for client queries and internal operations.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Governance, Web/Mobile Dev & Training', description: 'Responsible AI frameworks, scalable web and mobile development, and hands-on team training.' } },
+        ],
+      },
+    },
+
+    /* ── 3. WebPage ─────────────────────────────────────────────── */
+    {
+      '@type':          'WebPage',
+      '@id':            'https://akomzyai.com/#webpage',
+      url:              'https://akomzyai.com',
+      name:             'AkomzyAi Consulting | AI Automations, GEO, AEO, AI SEO & AI Ads',
+      isPartOf:         { '@id': 'https://akomzyai.com/#website' },
+      about:            { '@id': 'https://akomzyai.com/#organization' },
+      description:      'AkomzyAi Consulting delivers AI automation, GEO, AEO, AI SEO, ChatGPT Ads and AI governance for growth-stage businesses.',
+      inLanguage:       'en-GB',
+      dateModified:     new Date().toISOString().split('T')[0],
+    },
+
+    /* ── 4. FAQPage — critical for AEO & GEO ───────────────────── */
+    {
+      '@type': 'FAQPage',
+      '@id':   'https://akomzyai.com/#faq',
+      mainEntity: [
+        {
+          '@type':          'Question',
+          name:             'What is GEO (Generative Engine Optimisation)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'GEO — Generative Engine Optimisation — is the practice of optimising your brand and content so that AI models like ChatGPT, Google Gemini, and Perplexity cite and recommend your business in their generated responses. AkomzyAi Consulting specialises in GEO strategies that position your brand as a trusted, frequently cited authority inside AI-generated answers.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'What is AEO (Answer Engine Optimisation)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'AEO — Answer Engine Optimisation — is the process of structuring your website content so that voice assistants (Siri, Alexa, Google Assistant), featured snippets, and AI answer boxes surface your brand as the definitive response to user queries. AkomzyAi Consulting uses AEO to help businesses win zero-click positions and voice search results.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'What is AI SEO and how is it different from traditional SEO?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'AI SEO focuses on optimising your content to rank in AI-generated search results — including Google SGE (Search Generative Experience), Bing Copilot, and Perplexity. Unlike traditional SEO which targets blue-link rankings, AI SEO engineers your brand presence for next-generation search engines that answer rather than list. AkomzyAi Consulting builds AI SEO strategies that ensure your business appears in both traditional and AI-powered search.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'What are ChatGPT Ads (AI Ads)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'ChatGPT Ads — also called AI Ads — are targeted paid placements inside ChatGPT and other AI platforms that let brands reach high-intent buyers directly within AI conversations. AkomzyAi Consulting helps businesses set up and optimise AI-native ad campaigns before the market becomes saturated.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'What AI automation tools does AkomzyAi Consulting use?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'AkomzyAi Consulting builds automation systems on n8n, Zapier, Make (formerly Integromat), Airtable, GoHighLevel, Notion, HubSpot, Slack, Stripe, and Claude AI. We select the right stack for each client\'s specific workflows and growth goals.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'How long does it take to implement AI automation?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'Most AI automation projects at AkomzyAi Consulting follow a four-step process: Discovery, Design, Build & Deploy, and Optimise & Scale. Simple workflows can be live within days. Complex multi-system automations typically take two to six weeks. We provide full documentation, training, and ongoing support.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'Does AkomzyAi Consulting offer AI governance services?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'Yes. AkomzyAi Consulting provides AI governance frameworks that ensure your AI systems are responsible, compliant, and auditable. This includes policy development, risk assessment, and staff training so your entire organisation is AI-ready and confident.',
+          },
+        },
+        {
+          '@type':          'Question',
+          name:             'Is the discovery call really free with no commitment?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text:    'Yes. AkomzyAi Consulting offers a free 30-minute discovery call with no commitment required. We map your highest-value automation opportunities in the first call and respond to every enquiry within 24 hours.',
+          },
+        },
+      ],
+    },
+
+  ],
 }
 
 export default function Home() {

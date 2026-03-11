@@ -25,28 +25,6 @@ import {
  */
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
 
-/**
- * CALENDLY URL
- * 1. Log in at https://calendly.com
- * 2. Go to Event Types → Share → Copy Link
- * 3. Paste your scheduling URL below
- * Example: 'https://calendly.com/akomzyai/discovery-call'
- *
- * To use the full Calendly INLINE EMBED instead of the "open in tab" link:
- *   a. Add `import Script from 'next/script'` to this file
- *   b. Replace the <CalendlyPlaceholder> block below with:
- *        <div
- *          className="calendly-inline-widget"
- *          data-url={CALENDLY_URL}
- *          style={{ minWidth: '320px', height: '660px' }}
- *        />
- *   c. Paste this Script tag just before the closing </CTASection> return:
- *        <Script
- *          src="https://assets.calendly.com/assets/external/widget.js"
- *          strategy="lazyOnload"
- *        />
- */
-const CALENDLY_URL = 'YOUR_CALENDLY_URL'
 
 /* ─────────────────────────────────────────────────────────────────
    TYPES
@@ -97,8 +75,6 @@ export default function CTASection() {
   }
 
   const resetForm = () => { setFields(EMPTY); setStatus('idle') }
-
-  const isCalendlyConfigured = CALENDLY_URL !== 'YOUR_CALENDLY_URL'
 
   return (
     <>
@@ -180,18 +156,22 @@ export default function CTASection() {
               No commitment. Just clarity.
             </p>
 
-            {/* Primary CTA — scrolls to the booking column below */}
-            <motion.a
-              href="#booking"
+            {/* Primary CTA — opens Cal.com modal */}
+            <motion.button
+              onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const cal = (window as any)?.Cal?.ns?.['30min']
+                if (cal) cal('modal', { calLink: 'tokunbo-akomolede-qduo4z/30min', config: { layout: 'month_view' } })
+              }}
               className="inline-flex items-center gap-3 px-10 py-5 rounded-xl
-                         font-bold text-lg pulse-glow"
+                         font-bold text-lg pulse-glow cursor-pointer"
               style={{ backgroundColor: 'var(--brand-mint)', color: 'var(--brand-teal-deeper)' }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
               Book Your Free Discovery Call
               <ArrowRight size={20} strokeWidth={2.5} />
-            </motion.a>
+            </motion.button>
           </motion.div>
 
           {/* ════════════════════════════════════════════════════════
@@ -241,81 +221,58 @@ export default function CTASection() {
                 inline-embed instructions (Calendly JS snippet + next/script).
                 ─────────────────────────────────────────────────────────────
               */}
-              {isCalendlyConfigured ? (
-                /* Real Calendly inline embed — activated once URL is set */
+              {/* Cal.com booking */}
+              <div
+                className="flex flex-col items-center justify-center text-center gap-6 px-8 py-14"
+                style={{ minHeight: '380px' }}
+              >
                 <div
-                  className="calendly-inline-widget"
-                  data-url={CALENDLY_URL}
-                  style={{ minWidth: '320px', height: '660px' }}
-                />
-              ) : (
-                /* Placeholder until Calendly is configured */
-                <div
-                  className="flex flex-col items-center justify-center text-center gap-5 px-8 py-14"
-                  style={{ minHeight: '380px' }}
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{ backgroundColor: 'rgba(150,230,229,0.12)' }}
                 >
-                  <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                    style={{ backgroundColor: 'rgba(150,230,229,0.12)' }}
-                  >
-                    <Calendar size={28} style={{ color: 'var(--brand-mint)' }} />
-                  </div>
-
-                  <div>
-                    <p
-                      className="text-lg font-semibold mb-2"
-                      style={{ color: 'var(--brand-cream)' }}
-                    >
-                      Calendly Embed Goes Here
-                    </p>
-                    <p
-                      className="text-sm leading-relaxed max-w-xs mx-auto"
-                      style={{ color: 'rgba(255,255,251,0.45)' }}
-                    >
-                      Set{' '}
-                      <code
-                        className="rounded px-1.5 py-0.5 text-[11px] font-mono"
-                        style={{
-                          backgroundColor: 'rgba(150,230,229,0.12)',
-                          color:           'var(--brand-mint)',
-                        }}
-                      >
-                        CALENDLY_URL
-                      </code>{' '}
-                      at the top of this file, then follow the embed
-                      instructions in the comments above.
-                    </p>
-                  </div>
-
-                  <div
-                    className="flex items-center gap-2 text-xs"
-                    style={{ color: 'rgba(255,255,251,0.38)' }}
-                  >
-                    <Clock size={13} />
-                    30 min · Free · No commitment
-                  </div>
-
-                  {/* Fallback: open Calendly URL in new tab when configured */}
-                  <a
-                    href={isCalendlyConfigured ? CALENDLY_URL : '#'}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                               text-sm font-bold transition-all hover:scale-105"
-                    style={{
-                      backgroundColor: 'rgba(150,230,229,0.12)',
-                      border:          '1px solid rgba(150,230,229,0.25)',
-                      color:           'var(--brand-mint)',
-                      opacity:         isCalendlyConfigured ? 1 : 0.4,
-                      pointerEvents:   isCalendlyConfigured ? 'auto' : 'none',
-                    }}
-                    aria-disabled={!isCalendlyConfigured}
-                  >
-                    Open Calendly
-                    <ArrowRight size={15} />
-                  </a>
+                  <Calendar size={28} style={{ color: 'var(--brand-mint)' }} />
                 </div>
-              )}
+
+                <div>
+                  <p
+                    className="text-xl font-bold mb-2"
+                    style={{ color: 'var(--brand-cream)' }}
+                  >
+                    Pick a time that works for you
+                  </p>
+                  <p
+                    className="text-sm leading-relaxed max-w-xs mx-auto"
+                    style={{ color: 'rgba(255,255,251,0.50)' }}
+                  >
+                    30-minute free discovery session. No sales pressure — just
+                    an honest conversation about how AI can move your business forward.
+                  </p>
+                </div>
+
+                <div
+                  className="flex items-center gap-2 text-xs"
+                  style={{ color: 'rgba(255,255,251,0.38)' }}
+                >
+                  <Clock size={13} />
+                  30 min · Free · No commitment
+                </div>
+
+                <motion.button
+                  onClick={() => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const cal = (window as any)?.Cal?.ns?.['30min']
+                    if (cal) cal('modal', { calLink: 'tokunbo-akomolede-qduo4z/30min', config: { layout: 'month_view' } })
+                  }}
+                  className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl
+                             font-bold text-base pulse-glow cursor-pointer"
+                  style={{ backgroundColor: 'var(--brand-mint)', color: 'var(--brand-teal-deeper)' }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Book Your Free Call
+                  <ArrowRight size={17} strokeWidth={2.5} />
+                </motion.button>
+              </div>
             </div>
 
             {/* ── RIGHT: Contact form ──────────────────────────────── */}

@@ -122,6 +122,13 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', handleKey)
   }, [mobileOpen])
 
+  /* ── Open Cal.com booking modal ─────────────────────────────── */
+  const openCal = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cal = (window as any)?.Cal?.ns?.['30min']
+    if (cal) cal('modal', { calLink: 'tokunbo-akomolede-qduo4z/30min', config: { layout: 'month_view' } })
+  }, [])
+
   /* ── Smooth-scroll handler ───────────────────────────────────── */
   const scrollTo = useCallback(
     (
@@ -200,7 +207,7 @@ export default function Navbar() {
                 <span style={{ color: 'var(--brand-cream)' }}>Ai</span>
                 <span
                   className="font-semibold"
-                  style={{ color: 'var(--brand-cream)', opacity: 0.82 }}
+                  style={{ color: 'var(--brand-cream)' }}
                 >
                   {' '}Consulting
                 </span>
@@ -256,12 +263,11 @@ export default function Navbar() {
 
             {/* ── Desktop CTA (right) ───────────────────────────── */}
             <div className="hidden lg:block">
-              <a
-                href="#contact"
-                onClick={(e) => scrollTo(e, '#contact')}
+              <button
+                onClick={openCal}
                 className="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-bold
                            transition-all duration-200 hover:scale-[1.04] pulse-glow
-                           outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                           outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer"
                 style={
                   {
                     backgroundColor:      'var(--brand-mint)',
@@ -272,7 +278,7 @@ export default function Navbar() {
                 }
               >
                 Book a Call
-              </a>
+              </button>
             </div>
 
             {/* ── Mobile hamburger ──────────────────────────────── */}
@@ -395,13 +401,12 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile CTA */}
-        <a
-          href="#contact"
-          onClick={(e) => scrollTo(e, '#contact')}
+        <button
+          onClick={() => { closeOverlay(); setTimeout(openCal, 250) }}
           tabIndex={mobileOpen ? 0 : -1}
           className="mt-2 px-10 py-4 rounded-xl text-xl font-bold
                      transition-all duration-200 hover:scale-[1.04] pulse-glow
-                     outline-none focus-visible:ring-2"
+                     outline-none focus-visible:ring-2 cursor-pointer"
           style={
             {
               backgroundColor:      'var(--brand-mint)',
@@ -412,7 +417,7 @@ export default function Navbar() {
           }
         >
           Book a Call
-        </a>
+        </button>
 
         {/* Brand tagline */}
         <p

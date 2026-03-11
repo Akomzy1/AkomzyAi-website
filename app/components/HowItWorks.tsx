@@ -211,17 +211,21 @@ export default function HowItWorks() {
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <motion.a
-            href="#contact"
+          <motion.button
+            onClick={() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const cal = (window as any)?.Cal?.ns?.['30min']
+              if (cal) cal('modal', { calLink: 'tokunbo-akomolede-qduo4z/30min', config: { layout: 'month_view' } })
+            }}
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-bold text-base
-                       transition-colors duration-200 pulse-glow"
+                       transition-colors duration-200 pulse-glow cursor-pointer"
             style={{ backgroundColor: 'var(--brand-teal)', color: 'var(--brand-mint)' }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
             Start with a Discovery Call
             <ArrowRight size={17} strokeWidth={2.5} />
-          </motion.a>
+          </motion.button>
           <p
             className="mt-3 text-sm"
             style={{ color: 'var(--muted-text)', opacity: 0.7 }}

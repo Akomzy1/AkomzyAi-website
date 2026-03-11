@@ -242,10 +242,14 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
         >
           {/* Primary — mint fill */}
-          <motion.a
-            href="#contact"
+          <motion.button
+            onClick={() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const cal = (window as any)?.Cal?.ns?.['30min']
+              if (cal) cal('modal', { calLink: 'tokunbo-akomolede-qduo4z/30min', config: { layout: 'month_view' } })
+            }}
             className="inline-flex items-center gap-2 font-bold rounded-xl pulse-glow
-                       outline-none focus-visible:ring-2"
+                       outline-none focus-visible:ring-2 cursor-pointer"
             style={{
               backgroundColor:      'var(--brand-mint)',
               color:                'var(--brand-teal-deeper)',
@@ -259,7 +263,7 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
           >
             Book a Discovery Call
-          </motion.a>
+          </motion.button>
 
           {/* Ghost — mint border */}
           <motion.a

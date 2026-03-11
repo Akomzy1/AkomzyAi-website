@@ -101,9 +101,15 @@ export default function Footer() {
                 </span>
                 <span
                   className="text-2xl font-extrabold tracking-tight"
-                  style={{ color: 'var(--brand-mint-bright)' }}
+                  style={{ color: 'var(--brand-cream)' }}
                 >
                   Ai
+                </span>
+                <span
+                  className="text-2xl font-semibold tracking-tight ml-1.5"
+                  style={{ color: 'var(--brand-cream)' }}
+                >
+                  Consulting
                 </span>
               </div>
 

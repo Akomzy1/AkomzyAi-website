@@ -10,6 +10,10 @@ import {
   Bot,
   ShieldCheck,
   ArrowRight,
+  Search,
+  Globe,
+  MessageSquare,
+  Megaphone,
 } from 'lucide-react'
 
 /* ─────────────────────────────────────────────────────────────────
@@ -53,6 +57,34 @@ const services = [
     description: 'Conversational agents and decision-making workflows that handle client queries and internal operations around the clock.',
     spanClass:   '',
     wide:        false,
+  },
+  {
+    Icon:        Search,
+    title:       'AI SEO',
+    description: 'Optimise your content to rank in AI-generated search results. We engineer your brand\'s presence for next-generation search engines that answer, not just list.',
+    spanClass:   '',
+    wide:        false,
+  },
+  {
+    Icon:        Globe,
+    title:       'GEO — Generative Engine Optimisation',
+    description: 'Position your business as the trusted source cited by AI models like ChatGPT, Gemini, and Perplexity — ensuring you\'re recommended when it matters most.',
+    spanClass:   '',
+    wide:        false,
+  },
+  {
+    Icon:        MessageSquare,
+    title:       'AEO — Answer Engine Optimisation',
+    description: 'Structure your content so voice assistants, featured snippets, and AI answer boxes surface your brand as the definitive response.',
+    spanClass:   '',
+    wide:        false,
+  },
+  {
+    Icon:        Megaphone,
+    title:       'AI Ads — ChatGPT Ads',
+    description: 'Reach high-intent buyers inside ChatGPT with targeted AI-native ad placements — the new frontier of paid visibility before your competitors get there.',
+    spanClass:   'md:col-span-2 lg:col-span-3',
+    wide:        true,
   },
   {
     Icon:        ShieldCheck,
@@ -117,8 +149,8 @@ export default function Services() {
             className="text-lg leading-relaxed"
             style={{ color: 'var(--brand-ivory)', opacity: 0.82 }}
           >
-            Six service pillars covering the full stack of AI transformation —
-            from workflows to governance.
+            Ten service pillars covering the full stack of AI transformation —
+            from workflows and automation to AI SEO, GEO, AEO, and AI Ads.
           </p>
         </motion.div>
 
@@ -222,17 +254,26 @@ export default function Services() {
             </p>
           </div>
 
-          <motion.a
-            href="#contact"
+          <motion.button
+            onClick={() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const cal = (window as any)?.Cal?.ns?.['30min']
+              if (cal) {
+                cal('modal', {
+                  calLink: 'tokunbo-akomolede-qduo4z/30min',
+                  config: { layout: 'month_view' },
+                })
+              }
+            }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-base
-                       whitespace-nowrap shrink-0 pulse-glow"
+                       whitespace-nowrap shrink-0 pulse-glow cursor-pointer"
             style={{ backgroundColor: 'var(--brand-mint)', color: 'var(--brand-teal-deeper)' }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
           >
             Book a Call
             <ArrowRight size={17} strokeWidth={2.5} />
-          </motion.a>
+          </motion.button>
         </motion.div>
 
       </div>

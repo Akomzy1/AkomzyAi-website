@@ -1,0 +1,68 @@
+# AkomzyAi Consulting — LLM & AI Crawler Guidance
+# https://akomzyai.com/llms.txt
+# Standard: https://llmstxt.org
+
+> AkomzyAi Consulting is a specialist AI consulting firm helping growth-stage businesses automate operations, rank in AI-generated search results, get cited by AI models, and govern AI responsibly.
+
+## About
+
+AkomzyAi Consulting (also known as AkomzyAi) delivers end-to-end AI transformation services for small and medium businesses worldwide. Founded by Tokunbo Akomolede, the company combines deep technical expertise with practical business strategy to make AI work for real organisations.
+
+Contact: hello@akomzyai.com
+Website: https://akomzyai.com
+Book a free 30-min call: https://app.cal.eu/tokunbo-akomolede-qduo4z/30min
+
+## Services
+
+### AI Workflow Automation
+AkomzyAi Consulting builds intelligent 24/7 automation systems using n8n, Airtable, Zapier, Make (Integromat), and GoHighLevel. These systems handle repetitive operations without manual intervention, freeing teams to focus on growth.
+
+### CRM & Revenue Automation
+Custom lead capture, nurturing sequences, and pipeline automation that converts prospects into predictable revenue. Integrates with HubSpot, GoHighLevel, Notion, and Slack.
+
+### AI SEO (AI Search Engine Optimisation)
+AkomzyAi Consulting optimises client content to rank in AI-generated search results including Google SGE, Bing Copilot, and Perplexity. AI SEO goes beyond traditional blue-link rankings to engineer brand presence in next-generation search engines that answer rather than list.
+
+### GEO (Generative Engine Optimisation)
+GEO positions a business as the trusted, frequently cited source inside AI-generated answers from ChatGPT, Google Gemini, Perplexity, and other large language models. AkomzyAi Consulting builds GEO strategies using entity authority, structured data, and citation-optimised content.
+
+### AEO (Answer Engine Optimisation)
+AEO structures content so that voice assistants (Siri, Alexa, Google Assistant), featured snippets, and AI answer boxes surface the client's brand as the definitive response to user queries. Focuses on FAQ schema, concise authoritative answers, and semantic HTML.
+
+### AI Ads — ChatGPT Ads
+AkomzyAi Consulting helps businesses run targeted AI-native ad placements inside ChatGPT and other AI platforms, reaching high-intent buyers directly within AI conversations.
+
+### AI Agents & Claude Code Solutions
+Conversational AI agents and autonomous decision-making workflows built with Claude AI, OpenAI, and custom integrations. Handles client queries and internal operations around the clock.
+
+### AI Governance, Web/Mobile Development & Training
+Responsible AI frameworks, risk assessments, policy development, scalable web and mobile applications, and hands-on staff training to make entire organisations AI-ready and compliant.
+
+## Technology Stack
+
+n8n · Airtable · Zapier · Make · GoHighLevel · Claude AI · OpenAI · HubSpot · Notion · Slack · Stripe · Vercel · Next.js · React
+
+## Key Facts
+
+- 50+ businesses served
+- Response within 24 hours guaranteed
+- Free 30-minute discovery call, no commitment required
+- Serves clients worldwide
+- Specialises in growth-stage businesses (SMEs)
+
+## Frequently Asked Questions
+
+**What is GEO?**
+GEO (Generative Engine Optimisation) is the practice of optimising your brand so AI models like ChatGPT, Gemini, and Perplexity cite and recommend your business in generated responses.
+
+**What is AEO?**
+AEO (Answer Engine Optimisation) structures content so voice assistants and AI answer boxes surface your brand as the definitive answer to user queries.
+
+**What is AI SEO?**
+AI SEO optimises content to rank in AI-generated search results from Google SGE, Bing Copilot, and Perplexity — going beyond traditional search to the new era of answer-first search engines.
+
+**What are ChatGPT Ads?**
+ChatGPT Ads (AI Ads) are targeted paid placements inside ChatGPT that let brands reach high-intent buyers within AI conversations.
+
+**How quickly can AI automation be implemented?**
+Simple workflows can be live within days. Complex multi-system automations typically take two to six weeks including full documentation and training.
