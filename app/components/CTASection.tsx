@@ -16,14 +16,8 @@ import {
    CONFIGURATION — update both values before going live
 ───────────────────────────────────────────────────────────────── */
 
-/**
- * FORMSPREE ENDPOINT
- * 1. Sign up at https://formspree.io
- * 2. Create a new form (set "Email" to hello@akomzyai.com)
- * 3. Copy the endpoint URL and paste it below
- * Example: 'https://formspree.io/f/xrgjaklq'
- */
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+/* n8n webhook — receives form submissions from the website */
+const N8N_WEBHOOK = 'https://akomzy.app.n8n.cloud/webhook/akomzyweb'
 
 
 /* ─────────────────────────────────────────────────────────────────
@@ -63,10 +57,17 @@ export default function CTASection() {
     setStatus('submitting')
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(N8N_WEBHOOK, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body:    JSON.stringify({ ...fields, _gotcha: honeypot }),
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          name:      fields.name,
+          email:     fields.email,
+          company:   fields.company,
+          message:   fields.message,
+          source:    'akomzyai.com contact form',
+          submitted: new Date().toISOString(),
+        }),
       })
       setStatus(res.ok ? 'success' : 'error')
     } catch {
